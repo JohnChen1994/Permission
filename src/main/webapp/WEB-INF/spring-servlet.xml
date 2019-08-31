@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:aop="http://www.springframework.org/schema/aop"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:mvc="http://www.springframework.org/schema/mvc"
+       xsi:schemaLocation="http://www.springframework.org/schema/context
+       http://www.springframework.org/schema/context/spring-context.xsd
+       http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd
+       http://www.springframework.org/schema/aop
+       http://www.springframework.org/schema/aop/spring-aop.xsd
+       http://www.springframework.org/schema/tool
+       http://www.springframework.org/schema/tool/spring-tool.xsd http://www.springframework.org/schema/mvc http://www.springframework.org/schema/mvc/spring-mvc.xsd">
+
+    <!-- dispatcherServlet 配置, 请求相关配置 -->
+    <context:annotation-config/>
+
+    <!--启动注解驱动的spring mvc 功能-->
+    <mvc:annotation-driven/>
+
+    <mvc:interceptors>
+        <bean class="com.john.common.HttpInterceptor"/>
+    </mvc:interceptors>
+
+    <!--允许加载资源-->
+    <mvc:resources location="/js/" mapping="/js/**"/>
+    <mvc:resources location="/css/" mapping="/css/**"/>
+    <mvc:resources location="/bootstrap3.3.5/" mapping="/bootstrap3.3.5/**"/>
+    <mvc:resources location="/assets/" mapping="/assets/**"/>
+    <mvc:resources location="/ztree/" mapping="/ztree/**"/>
+
+
+    <!--启动包扫描功能  -->
+    <context:component-scan base-package="com.john.controller"/>
+    <context:component-scan base-package="com.john.service"/>
+
+    <!-- requestMapping -->
+   <!-- <bean class="org.springframework.web.servlet.mvc.method.annotation.RequestMappingHandlerAdapter"/>-->
+
+
+
+    <!--ApplicationContextHelper 工具类 启动加载-->
+    <bean class="com.john.common.ApplicationContextHelper" lazy-init="false"/>
+
+    <!--注册全局异常类-->
+    <bean class="com.john.common.SpringExceptionResolve"/>
+
+    <!-- 返回的文件格式  json jsp  ...-->
+    <bean class="org.springframework.web.servlet.view.BeanNameViewResolver"/>
+
+    <!--json 返回 处理-->
+    <bean id="jsonView" class="org.springframework.web.servlet.view.json.MappingJackson2JsonView"/>
+
+
+    <!--jsp 返回处理-->
+    <bean class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+        <!--jsp 路径前缀-->
+        <property name="prefix" value="/WEB-INF/views/"/>
+        <!--文件后缀-->
+        <property name="suffix" value=".jsp"/>
+    </bean>
+</beans>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
